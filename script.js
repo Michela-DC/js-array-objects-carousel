@@ -39,27 +39,27 @@ const slideWrapper = document.querySelector('.slide-wrapper');
 const imgInfo = document.querySelector('.img-info');
 let activeIndex = 0; // creo un indice che mi serve per spostare la classe active incrementando o decrementando l'indice - lo inizializzo a zero per partire dalla prima slide
 
-// generate l ’html delle slide ciclando questo array e recuperando le informazioni necessarie della proprietà dei singoli oggetti.
-for(let i = 0; i < slides.length; i++){ 
-    //salvo le proprietà delle posizione corrente in delle costanti
-    const image = slides[i].image;
-    const title = slides[i].title;
-    const description = slides[i].description;
-
+slides.forEach ( (element) => {
+    //salvo le proprietà della posizione corrente in delle costanti
+    const {image} = element;
+    const {title} = element;
+    const {description} = element;
+ 
     // creo l'elemento html e lo inserisco nel rispoettivo container html
     const imgThumbnail = `<img class="thumbnail" src="${image}">`;
     thumbnailsContainer.innerHTML += `${imgThumbnail}`;
     console.log(imgThumbnail, thumbnailsContainer);
-
+ 
     const imgSlide = ` <img class="slide" src="${image}">`;
     slideWrapper.innerHTML += `${imgSlide}`;
     console.log(slideWrapper);
-
+ 
     const imgTitle = `<h3 class="img-title">${title}</h3>`;
     const imgText = `<p class="img-text">${description}</p>`;
     imgInfo.innerHTML += `${imgTitle} ${imgText}`;
     console.log(imgTitle,imgText,imgInfo);
-}
+    
+});
 
 // salvo l'array delle thumbnail, delle slide e delle info
 // const thumbnail = document.getElementsByClassName("thumbnail"); se avessi fatto così mi ritornava una lista di nodi
