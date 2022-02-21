@@ -37,6 +37,14 @@ console.log(slides);
 const thumbnailsContainer = document.querySelector(".thumbnails-container");
 const slideWrapper = document.querySelector('.slide-wrapper');
 const imgInfo = document.querySelector('.img-info');
+let activeIndex = 0; // creo un indice che mi serve per spostare la classe active incrementando o decrementando l'indice - lo inizializzo a zero per partire dalla prima slide
+
+//SE I BOTTONI LI METTO QUI NON FUNGONO
+const btnUp = document.getElementById('btn-up');
+console.log(btnUp);
+
+const btnDown = document.getElementById('btn-down');
+console.log(btnUp);  
 
 
 // generate l ’html delle slide ciclando questo array e recuperando le informazioni necessarie della proprietà dei singoli oggetti.
@@ -47,9 +55,9 @@ for(let i = 0; i < slides.length; i++){
     const description = slides[i].description;
 
     // creo l'elemento html e lo inserisco nel rispoettivo container html
-    const thumbnail = `<img class="thumbnail" src="${image}">`;
-    thumbnailsContainer.innerHTML += `${thumbnail}`;
-    console.log(thumbnail);
+    const imgThumbnail = `<img class="thumbnail" src="${image}">`;
+    thumbnailsContainer.innerHTML += `${imgThumbnail}`;
+    console.log(imgThumbnail);
 
     const imgSlide = ` <img class="slide" src="${image}">`;
     slideWrapper.innerHTML += `${imgSlide}`;
@@ -60,3 +68,78 @@ for(let i = 0; i < slides.length; i++){
     imgInfo.innerHTML += `${imgTitle} ${imgText}`;
     console.log(imgTitle,imgText,imgInfo);
 }
+
+// salvo l'array delle thumbnail, delle slide e delle info
+// const thumbnail = document.getElementsByClassName("thumbnail"); se avessi fatto così mi ritornava una lista di nodi
+const thumbnail = [...document.getElementsByClassName("thumbnail")]; 
+const slide = [...document.getElementsByClassName("slide")];
+const slideTitle = [...document.getElementsByClassName("img-title")];
+const slideText = [...document.getElementsByClassName("img-text")];
+console.log(thumbnail, slide, slideTitle, slideText);
+
+// imposto la thumbnail, la slide e le info attive in base all'indice di partenza
+// Se avessi fatto imgElement.classlist.add("active"); così non funziona perché imgElement é una stringa quindi mi sono creata l'array per prenderne gli elementi
+thumbnail[activeIndex].classList.add('active'); 
+slide[activeIndex].classList.add('active-slide');
+slideTitle[activeIndex].classList.add('active-slide');
+slideText[activeIndex].classList.add('active-slide');
+console.log(thumbnail[activeIndex], slide[activeIndex],slideTitle[activeIndex],slideText[activeIndex]);
+
+// al click sui bottoni mi sposto su o giù di una immagine
+
+
+// bottone su
+btnUp.addEventListener('click', function(){
+    console.log('vai sù');
+
+    // devo togliere la classe active dalla slide e dalla thumbnail correnti
+    slide[activeIndex].classList.remove('active-slide');
+    slideTitle[activeIndex].classList.remove('active-slide');
+    slideText[activeIndex].classList.remove('active-slide');
+    thumbnail[activeIndex].classList.remove('active');
+    console.log(thumbnail[activeIndex], slide[activeIndex], slideTitle[activeIndex]);
+    
+    if ( activeIndex > 0){ 
+    //decremento l'activeIndex per stabilire la nuova thumbnail e la nuova slide corrente
+        activeIndex --;
+    // la prima immagine ha indice 0 quindi in questo if dico che se clicco sul pulsante su' e l'indice è minore di 0 non posso più diminuire l'indice, quindi non andrò oltre la prima immagine
+    } else { 
+    // se l'indice diventa < 0 allora assegno all'indice la lunghezza dell'array - 1 (in questo caso 4) così l'indice si sposterà sull'immagine che dentro l'array è nella posizione corrispondente ovvero quella che ho messo per ultima in basso [array è lungo 5 ma l'ultima pozione è 4 perchè si parte a contare da 0]
+        activeIndex = items.length - 1;
+    // in questo modo riesco ad andare oltre alla prima immagine ripartendo dall'ultima in basso
+    }
+    
+    // devo aggiungere la classe active dalla slide e dalla thumbnail correnti
+    slide[activeIndex].classList.add('active-slide');
+    slideTitle[activeIndex].classList.add('active-slide');
+    slideText[activeIndex].classList.add('active-slide');
+    thumbnail[activeIndex].classList.add('active');
+    console.log(thumbnail[activeIndex], slide[activeIndex], slideTitle[activeIndex]);
+})
+
+//bottone giù
+btnDown.addEventListener('click', function(){
+    console.log('vai giù');
+    
+    slide[activeIndex].classList.remove('active-slide');
+    slideTitle[activeIndex].classList.remove('active-slide');
+    slideText[activeIndex].classList.remove('active-slide');
+    thumbnail[activeIndex].classList.remove('active');
+    console.log(activeIndex)
+    
+    if (activeIndex < slides.length - 1){ 
+    // se l'indice è minore della lunghezza dell'array - 1 (ovvero minore delle posibili posizione dentro l'array, in questo caso 4) allora incremento l'indice
+        activeIndex ++;
+    } else{
+    // se l'indice diventa maggiore della lunghezza dell'array - 1 allora lo faccio ritornare a zero, ovvero alla posizione dell'aray in cui è l'immagine che ho messo per prima i alto
+        activeIndex = 0;
+    }
+    
+    slide[activeIndex].classList.add('active-slide');
+    slideTitle[activeIndex].classList.add('active-slide');
+    slideText[activeIndex].classList.add('active-slide');
+    thumbnail[activeIndex].classList.add('active');
+
+})
+
+
