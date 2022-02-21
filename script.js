@@ -39,14 +39,6 @@ const slideWrapper = document.querySelector('.slide-wrapper');
 const imgInfo = document.querySelector('.img-info');
 let activeIndex = 0; // creo un indice che mi serve per spostare la classe active incrementando o decrementando l'indice - lo inizializzo a zero per partire dalla prima slide
 
-//SE I BOTTONI LI METTO QUI NON FUNGONO
-const btnUp = document.getElementById('btn-up');
-console.log(btnUp);
-
-const btnDown = document.getElementById('btn-down');
-console.log(btnUp);  
-
-
 // generate l ’html delle slide ciclando questo array e recuperando le informazioni necessarie della proprietà dei singoli oggetti.
 for(let i = 0; i < slides.length; i++){ 
     //salvo le proprietà delle posizione corrente in delle costanti
@@ -57,7 +49,7 @@ for(let i = 0; i < slides.length; i++){
     // creo l'elemento html e lo inserisco nel rispoettivo container html
     const imgThumbnail = `<img class="thumbnail" src="${image}">`;
     thumbnailsContainer.innerHTML += `${imgThumbnail}`;
-    console.log(imgThumbnail);
+    console.log(imgThumbnail, thumbnailsContainer);
 
     const imgSlide = ` <img class="slide" src="${image}">`;
     slideWrapper.innerHTML += `${imgSlide}`;
@@ -71,7 +63,7 @@ for(let i = 0; i < slides.length; i++){
 
 // salvo l'array delle thumbnail, delle slide e delle info
 // const thumbnail = document.getElementsByClassName("thumbnail"); se avessi fatto così mi ritornava una lista di nodi
-const thumbnail = [...document.getElementsByClassName("thumbnail")]; 
+const thumbnail = [...document.getElementsByClassName("thumbnail")];
 const slide = [...document.getElementsByClassName("slide")];
 const slideTitle = [...document.getElementsByClassName("img-title")];
 const slideText = [...document.getElementsByClassName("img-text")];
@@ -86,7 +78,11 @@ slideText[activeIndex].classList.add('active-slide');
 console.log(thumbnail[activeIndex], slide[activeIndex],slideTitle[activeIndex],slideText[activeIndex]);
 
 // al click sui bottoni mi sposto su o giù di una immagine
+const btnUp = document.getElementById('btn-up');
+console.log(btnUp);
 
+const btnDown = document.getElementById('btn-down');
+console.log(btnUp);  
 
 // bottone su
 btnUp.addEventListener('click', function(){
